@@ -37,27 +37,27 @@
 			}
 			
 			/* 提示内容 */
-			#box2{
+			.sex{
 				width: 100%;
 				height: 80%;
 				border: 1px solid;
 				box-sizing: border-box;
 			}
-			#box2 h4{
+			 .sex h4{
 				display: flex;
 				justify-content: space-between;
 				padding:0  20px;
 				
 			}
-			#box2 h4 span{
+			.sex h4 span{
 				color: #FF0000;
 				
 			}
 			
-			#box2 ul{
+			.sex ul{
 				
 			}
-			#box2 li{
+			.sex li{
 				width: 100%;
 				line-height: 50px;
 				border-bottom: 1px solid;
@@ -81,15 +81,21 @@
 				<input class="rightnav" type="text" placeholder="添加ToDo" />
 			</div>
 			<!-- 主体内容 -->
-			<div id="box2">
+			<div id="box2" class="sex" style="margin-bottom:30px;">
 				<h4>提示内容   <span id="box_span">0</span> </h4>
 				<ul>
-					<li><span>111</span><span class="del" onclick="del(this)">X</span></li>
-				    <li><span>222</span><span class="del" onclick="del(this)">X</span></li>
+
+					<li><input type="checkbox" onclick="remove(this)"> <span>111</span><span class="del" onclick="del(this)">X</span></li>
+				    <li><input type="checkbox" onclick="remove(this)"><span>222</span><span class="del" onclick="del(this)">X</span></li>
 				</ul>
 				
 			</div>
-			
+			<div id="box3" class="sex">
+				<h4>提示内容   <span id="box_span">0</span> </h4>
+				<ul>
+				</ul>
+				
+			</div>
 		</div>
 		
 		
@@ -101,11 +107,13 @@
 	</body>
 </html>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script type="text/javascript">
+	
 	$(function(){
 		//初始化调用刷新方法
 		refech();
-		});
+	});
 	
 	// 添加事件
 	/**回车事件 keyCode==13*/
@@ -116,13 +124,13 @@
 		 //1 .获取用户输入的内容
 		let val = $('.rightnav').val();
 		 //2.得到我们每次添加的li模板；
-		 let nowli = '<li><span>'+val+'</span><span class="del" onclick="del(this)">X</span></li>';
+		 let nowli = '<li><input type="checkbox" onclick="remove(this)"> <span>'+val+'</span><span class="del" onclick="del(this)">X</span></li>';
 		 //二
 		 //3.把我们li模板添加到box2下的ul中去
 		 $('#box2 ul').append(nowli);
 	
-	//新增完了调用刷新方法
-	 refech();
+		//新增完了调用刷新方法
+		refech();
 	 }
 	 
 	});
@@ -131,19 +139,31 @@
 		
 		$(that).parent().remove();  //给当前(<span class="del" onclick="del(this)">X</span>)的this的父元素调用删除本身方法。谁点remove就把它本身删掉。
 		
-		// $.cookie('the_cookie','the_value',{expires:7});//增
-		// $.cookie('the_cookie')//读
-		// $.cookie('the_cookie',null,-1);//删
-	//删除完了调用刷新方法
-	refech();
+		//删除完了调用刷新方法
+		refech();
+	}
+	//remove事件
+	function  remove( that ){
+		//调用他的删除事件·
+		del(that);
+		//添加移动事件
+		let text ='<li>' + $(that).parent().html() + '</li>';
+		 $('#box3 ul').append( text );
 	}
 	
-	refech();
+	
 	//刷新事件
 	function refech(){
-		 let nowli = $('#box2 ul li').length;  //获取li的数量，用length来表示
+		$.cookie('name', 'haoxing');//存cookie
+
+		let nowli = $('#box2 ul li').length;  //获取li的数量，用length来表示
 		$('#box_span').html(nowli);  //把它的数量赋给#box_span（span里面的值）；
+		
+
 	}
+	
+	
+
 	
 	
 	
