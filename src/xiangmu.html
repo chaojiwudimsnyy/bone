@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/1.css"/>
+		<style type="text/css">
+			.box{
+				width: 1000px;
+				min-height: 350px;
+				border: 1px solid;
+				margin: 50px auto 0 ;
+			}
+			.nav{
+				width: 100%;
+				height: 80px;
+				background: #A9A9A9;
+				display: flex;
+				justify-content: space-between;
+			}
+			.nav .leftnav{
+				width: 150px;
+				height: 80px;
+				border: 1px solid;
+				font-size: 30px;
+				color: wheat;
+				text-align: center;
+				line-height: 60px;
+			}
+			.nav .rightnav{
+				width: 400px;
+				height: 80px;
+				border: 1px solid;
+				border-radius:25px ;
+				text-indent: 30px;
+				
+			}
+			
+			/* 提示内容 */
+			#box2{
+				width: 100%;
+				height: 80%;
+				border: 1px solid;
+				box-sizing: border-box;
+			}
+			#box2 h4{
+				display: flex;
+				justify-content: space-between;
+				padding:0  20px;
+				
+			}
+			#box2 h4 span{
+				color: #FF0000;
+				
+			}
+			
+			#box2 ul{
+				
+			}
+			#box2 li{
+				width: 100%;
+				line-height: 50px;
+				border-bottom: 1px solid;
+				display: flex;
+				justify-content: space-between;
+				padding: 0 20px;
+				box-sizing: border-box;
+				
+			}
+			.del:hover{
+				cursor: pointer;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<!-- 头部内容 -->
+			<div class="nav">
+				<div class="leftnav">ToDoList</div>
+				<input class="rightnav" type="text" placeholder="添加ToDo" />
+			</div>
+			<!-- 主体内容 -->
+			<div id="box2">
+				<h4>提示内容   <span id="box_span">0</span> </h4>
+				<ul>
+					<li><span>111</span><span class="del" onclick="del(this)">X</span></li>
+				    <li><span>222</span><span class="del" onclick="del(this)">X</span></li>
+				</ul>
+				
+			</div>
+			
+		</div>
+		
+		
+		
+		
+		<div id="" style="text-align: center;font-size: 30px;margin:30px 0;color:#fff;background: #FFC0CB;padding: 20px 0;">
+			妍妍最棒了，加油，缓解下压力，换换心情，哈
+		</div>
+	</body>
+</html>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		//初始化调用刷新方法
+		refech();
+		});
+	
+	// 添加事件
+	/**回车事件 keyCode==13*/
+	$(document).keyup(function(event){
+	 if(event.keyCode ==13){
+		 
+		 //一
+		 //1 .获取用户输入的内容
+		let val = $('.rightnav').val();
+		 //2.得到我们每次添加的li模板；
+		 let nowli = '<li><span>'+val+'</span><span class="del" onclick="del(this)">X</span></li>';
+		 //二
+		 //3.把我们li模板添加到box2下的ul中去
+		 $('#box2 ul').append(nowli);
+	
+	//新增完了调用刷新方法
+	 refech();
+	 }
+	 
+	});
+	//删除事件
+	function del( that ){//这里的that是上面调用这个函数传进来的this
+		
+		$(that).parent().remove();  //给当前(<span class="del" onclick="del(this)">X</span>)的this的父元素调用删除本身方法。谁点remove就把它本身删掉。
+		
+		// $.cookie('the_cookie','the_value',{expires:7});//增
+		// $.cookie('the_cookie')//读
+		// $.cookie('the_cookie',null,-1);//删
+	//删除完了调用刷新方法
+	refech();
+	}
+	
+	refech();
+	//刷新事件
+	function refech(){
+		 let nowli = $('#box2 ul li').length;  //获取li的数量，用length来表示
+		$('#box_span').html(nowli);  //把它的数量赋给#box_span（span里面的值）；
+	}
+	
+	
+	
+	
+</script>
